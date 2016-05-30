@@ -54,7 +54,7 @@ public class ClientPage extends Page {
 			@Override
 			public Boolean apply(WebDriver driver) {
 				// TODO Auto-generated method stub
-				return null != (NewClientBtn);
+				return null != (driver.findElement(By.xpath("//span[@class='pull-right new-client-action']")));
 			}
 		});
 	}// end of waitForPageToLoad method

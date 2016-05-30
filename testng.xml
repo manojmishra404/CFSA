@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="SpeandAnalytics" >
-  <test name="Test" >
-  	<parameter name="browser" value="CHROME"/>
-  
-  </test> <!-- Test -->
+<suite name="SpeandAnalytics">
+	<listeners>
+		<listener class-name="com.cfsa.qa.tests.TestFrameWork"></listener>
+	</listeners>
+	<test name="Tests" preserve-order="true">
+		<classes>
+			<class name="com.cfsa.qa.tests.Test1">
+				<methods>
+					<include name="testcase1" />
+				</methods>
+			</class>
+		</classes>
+	</test><!-- test -->
 </suite> <!-- Suite -->

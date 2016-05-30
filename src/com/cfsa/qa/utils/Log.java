@@ -1,32 +1,19 @@
 
 package com.cfsa.qa.utils;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
-import org.openqa.selenium.ie.InternetExplorerDriverService;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-
-import com.google.common.base.Throwables;
 
 
 public  class Log {
+	
+	
+//	public Log(){
+//	PropertyConfigurator.configure(System.getProperty("user.dir")
+//			+ "\\log4j.properties");
+//	}
 
 
-	private static Logger APPLICATION_LOGS = Logger.getLogger("Log");
+	private static Logger APPLICATION_LOGS = Logger.getLogger(Log.class.getName());
 
 
     public static void errorLog(String errorMessage,Throwable t)
