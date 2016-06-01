@@ -9,7 +9,7 @@ public class Login extends  TestFrameWork{
     }
     public void toCFPA()
     {
-        driver.get("");
+       driver.get("");
     }
 
 }

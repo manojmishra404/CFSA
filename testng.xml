@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Tests" preserve-order="true">
 		<classes>
-			<class name="com.cfsa.qa.tests.Test1">
+			<class name="com.cfsa.qa.tests.ClientTest">
 				<methods>
 					<include name="testcase1" />
 				</methods>
