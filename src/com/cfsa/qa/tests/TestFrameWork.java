@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -20,25 +21,29 @@ import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import com.cfsa.qa.utils.FileHandeling;
 import com.cfsa.qa.utils.Log;
+import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
 
 public class TestFrameWork implements ITestListener {
 
-	protected static WebDriver driver=null;
+	protected static WebDriver driver;
 	protected static InternetExplorerDriverService service;
+	protected static JavascriptExecutor jse;
 
 	// public String browserName = FileHandeling.getConfigValue("browser");
 
-	@BeforeTest
+	@BeforeMethod
 	public void openBroswer() throws Exception {
 		
-		PropertyConfigurator.configure(System.getProperty("user.dir")
-				+ "\\log4j.properties");
+//		PropertyConfigurator.configure(System.getProperty("user.dir")
+//				+ "\\log4j.properties");
 		String browserName = FileHandeling.getConfigValue("browser");
 		// open broswer logics for opening broswer Firefox or chrome after
 		// reading config
@@ -58,16 +63,17 @@ public class TestFrameWork implements ITestListener {
 //
 //			driver = new FirefoxDriver(binary, ffprofile);
 //			Log.InfoLog("Firefox Browser opened.");
-			PropertyConfigurator.configure(System.getProperty("user.dir")
-					+ "\\log4j.properties");
+//			PropertyConfigurator.configure(System.getProperty("user.dir")
+//					+ "\\log4j.properties");
 
 			 driver= new FirefoxDriver(); 
+			 jse = (JavascriptExecutor) driver;
 			 Log.InfoLog("firefox Browser opened.");
 		}
 
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void closeBroswer() {
 		driver.quit();
 		Log.InfoLog("Browser Closed");
@@ -78,7 +84,7 @@ public class TestFrameWork implements ITestListener {
 	}
 
 	public void onTestSuccess(ITestResult iTestResult) {
-
+		
 	}
 	public void onTestFailure(ITestResult iTestResult) {
 		

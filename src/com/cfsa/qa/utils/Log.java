@@ -13,6 +13,7 @@ public  class Log {
 //			+ "\\log4j.properties");
 //	}
 
+	
 
 	private static Logger APPLICATION_LOGS = Logger.getLogger(Log.class.getName());
 

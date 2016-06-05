@@ -3,6 +3,7 @@
  */
 package com.cfsa.qa.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,6 +24,9 @@ public class DashboardPage extends Page {
 	@FindBy(how = How.XPATH, using = "//span[@class='pull-right new-client-action']/i")
 	WebElement NewClientBtn;
 	
+	
+	
+	
 	public void clickOnClientButton() {
 		NewClientBtn.click();
 
@@ -31,6 +35,12 @@ public class DashboardPage extends Page {
 	@Override
 	public void waitForPageToLoad() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public boolean clientNameIsDisplayed(String clientName)
+	{
+		return isDisplayed(driver.findElement(By.xpath("//span[text()='"+clientName+"' and @class='card-title ng-binding']")));
 		
 	}
 
