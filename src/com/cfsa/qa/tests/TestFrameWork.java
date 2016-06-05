@@ -1,70 +1,125 @@
 package com.cfsa.qa.tests;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+
+import com.cfsa.qa.utils.FileHandeling;
+import com.cfsa.qa.utils.Log;
+import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
+
 
 public class TestFrameWork implements ITestListener {
 
-protected WebDriver webDriver;
-    protected  WebDriver driver;
+	protected static WebDriver driver;
+	protected static InternetExplorerDriverService service;
+	protected static JavascriptExecutor jse;
 
-    @BeforeTest
-    public void openBroswer(){
-        //open broswer logics for opening broswer Firefox or chrome after reading config
-        driver =new FirefoxDriver();
-    }
-    @AfterTest
-    public void closeBroswer(){
-        driver.quit();
-    }
+	// public String browserName = FileHandeling.getConfigValue("browser");
 
+	@BeforeMethod
+	public void openBroswer() throws Exception {
+		
+//		PropertyConfigurator.configure(System.getProperty("user.dir")
+//				+ "\\log4j.properties");
+		String browserName = FileHandeling.getConfigValue("browser");
+		// open broswer logics for opening broswer Firefox or chrome after
+		// reading config
+		if (browserName.equalsIgnoreCase("chrome")) {
+			// start chrome driver instance
+			System.setProperty("webdriver.chrome.driver",
+					System.getProperty("user.dir") + "\\lib\\chromedriver.exe");
+			driver = new ChromeDriver();
+			Log.InfoLog("Chrome Browser opened.");
 
+		} else if (browserName.equalsIgnoreCase("FIREFOX")) {
+			// start firefox driver instance
+//			FirefoxBinary binary = new FirefoxBinary(new File(
+//					"C:/Program Files (x86)/Mozilla Firefox/firefox.exe"));
+//			ProfilesIni profile = new ProfilesIni();
+//			FirefoxProfile ffprofile = profile.getProfile("default");
+//
+//			driver = new FirefoxDriver(binary, ffprofile);
+//			Log.InfoLog("Firefox Browser opened.");
+//			PropertyConfigurator.configure(System.getProperty("user.dir")
+//					+ "\\log4j.properties");
 
+			 driver= new FirefoxDriver(); 
+			 jse = (JavascriptExecutor) driver;
+			 Log.InfoLog("firefox Browser opened.");
+		}
 
+	}
 
+	@AfterMethod
+	public void closeBroswer() {
+		driver.quit();
+		Log.InfoLog("Browser Closed");
+	}
 
+	public void onTestStart(ITestResult iTestResult) {
 
+	}
 
-    public void onTestStart(ITestResult iTestResult) {
+	public void onTestSuccess(ITestResult iTestResult) {
+		
+	}
+	public void onTestFailure(ITestResult iTestResult) {
+		
+		String path = System.getProperty("user.dir") + "\\TestOutput\\ScreenShots";
+		
+		DateFormat dateFormat = new SimpleDateFormat("HH_mm_ss_dd_MM");
+		Calendar cal = Calendar.getInstance();
+		String date = dateFormat.format(cal.getTime());
+		 File scrFile = ((TakesScreenshot) driver)
+				.getScreenshotAs(OutputType.FILE);
+		
+		try {
+			FileUtils.copyFile(scrFile, new File(path,"screenshot_"+date+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-    }
+	public void onTestSkipped(ITestResult iTestResult) {
 
-    public void onTestSuccess(ITestResult iTestResult) {
+	}
 
-    }
+	public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
 
-    public void onTestFailure(ITestResult iTestResult) {
+	}
 
-    }
+	public void onStart(ITestContext iTestContext) {
 
-    public void onTestSkipped(ITestResult iTestResult) {
+	}
 
-    }
+	public void onFinish(ITestContext iTestContext) {
 
-    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+	}
 
-    }
-
-    public void onStart(ITestContext iTestContext) {
-
-    }
-
-    public void onFinish(ITestContext iTestContext) {
-
-    }
-
-
-
-
-
-
-
-
-
+	
 
 }

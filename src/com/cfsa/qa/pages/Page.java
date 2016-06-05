@@ -16,10 +16,11 @@ public  abstract class Page {
     protected Wait wait;
     protected WebDriver driver;
     public abstract void waitForPageToLoad();
-
+    
     public Page(WebDriver driver) {
         wait = new WebDriverWait(driver, TIMEOUT_IN_SECONDS);
         this.driver = driver;
+        waitForPageToLoad();
     }
     public void setText(WebElement webElement, String inputText) {
         if (inputText == null) return;
@@ -69,5 +70,35 @@ public  abstract class Page {
         return w.get(0);
     }
 
+    protected String getText(WebElement webElement)
+    {
+    	return webElement.getText(); 
+    }
+    
+    protected boolean isDisplayed(WebElement webElement)
+    {
+    	try{
+    		if(webElement.isDisplayed())
+    			return true;
+    		else
+    			return false;
+    	}catch(Exception ex)
+    	{
+    		return false;
+    	}
+    	
+    }
+    
+    public boolean isEnabled(WebElement webElement) {
+    	
+		try{
+			if(webElement.isEnabled())
+				return true;
+			else return false;
+			
+		}catch(Exception e){
+			return false;
+		}
+	}
 
-}
+}//end of class
