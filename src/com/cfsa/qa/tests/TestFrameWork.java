@@ -30,7 +30,6 @@ import com.cfsa.qa.utils.FileHandeling;
 import com.cfsa.qa.utils.Log;
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
-
 public class TestFrameWork implements ITestListener {
 
 	protected static WebDriver driver;
@@ -41,9 +40,9 @@ public class TestFrameWork implements ITestListener {
 
 	@BeforeMethod
 	public void openBroswer() throws Exception {
-		
-//		PropertyConfigurator.configure(System.getProperty("user.dir")
-//				+ "\\log4j.properties");
+
+		// PropertyConfigurator.configure(System.getProperty("user.dir")
+		// + "\\log4j.properties");
 		String browserName = FileHandeling.getConfigValue("browser");
 		// open broswer logics for opening broswer Firefox or chrome after
 		// reading config
@@ -52,23 +51,23 @@ public class TestFrameWork implements ITestListener {
 			System.setProperty("webdriver.chrome.driver",
 					System.getProperty("user.dir") + "\\lib\\chromedriver.exe");
 			driver = new ChromeDriver();
-			Log.InfoLog("Chrome Browser opened.");
+			//Log.InfoLog("Chrome Browser opened.");
 
 		} else if (browserName.equalsIgnoreCase("FIREFOX")) {
 			// start firefox driver instance
-//			FirefoxBinary binary = new FirefoxBinary(new File(
-//					"C:/Program Files (x86)/Mozilla Firefox/firefox.exe"));
-//			ProfilesIni profile = new ProfilesIni();
-//			FirefoxProfile ffprofile = profile.getProfile("default");
-//
-//			driver = new FirefoxDriver(binary, ffprofile);
-//			Log.InfoLog("Firefox Browser opened.");
-//			PropertyConfigurator.configure(System.getProperty("user.dir")
-//					+ "\\log4j.properties");
+			// FirefoxBinary binary = new FirefoxBinary(new File(
+			// "C:/Program Files (x86)/Mozilla Firefox/firefox.exe"));
+			// ProfilesIni profile = new ProfilesIni();
+			// FirefoxProfile ffprofile = profile.getProfile("default");
+			//
+			// driver = new FirefoxDriver(binary, ffprofile);
+			// Log.InfoLog("Firefox Browser opened.");
+			// PropertyConfigurator.configure(System.getProperty("user.dir")
+			// + "\\log4j.properties");
 
-			 driver= new FirefoxDriver(); 
-			 jse = (JavascriptExecutor) driver;
-			 Log.InfoLog("firefox Browser opened.");
+			driver = new FirefoxDriver();
+			jse = (JavascriptExecutor) driver;
+			//Log.InfoLog("firefox Browser opened.");
 		}
 
 	}
@@ -76,7 +75,7 @@ public class TestFrameWork implements ITestListener {
 	@AfterMethod
 	public void closeBroswer() {
 		driver.quit();
-		Log.InfoLog("Browser Closed");
+		//Log.InfoLog("Browser Closed");
 	}
 
 	public void onTestStart(ITestResult iTestResult) {
@@ -84,21 +83,30 @@ public class TestFrameWork implements ITestListener {
 	}
 
 	public void onTestSuccess(ITestResult iTestResult) {
-		
+
 	}
+
 	public void onTestFailure(ITestResult iTestResult) {
-		
-		String path = System.getProperty("user.dir") + "\\TestOutput\\ScreenShots";
-		
+
+		String path = System.getProperty("user.dir")
+				+ "\\TestOutput\\ScreenShots";
+		String testMethodNameAndTestClassName = iTestResult.getMethod()
+				.getMethodName()
+				+ "("
+				+ iTestResult.getTestClass().getName()
+				+ ")";
 		DateFormat dateFormat = new SimpleDateFormat("HH_mm_ss_dd_MM");
 		Calendar cal = Calendar.getInstance();
 		String date = dateFormat.format(cal.getTime());
-		 File scrFile = ((TakesScreenshot) driver)
+		File scrFile = ((TakesScreenshot) driver)
 				.getScreenshotAs(OutputType.FILE);
-		
+		String fileName = testMethodNameAndTestClassName +"_"+date+ ".jpg";
+
 		try {
-			FileUtils.copyFile(scrFile, new File(path,"screenshot_"+date+".jpg"));
-		} catch (IOException e) {
+			// FileUtils.copyFile(scrFile, new
+			// File(path,"screenshot_"+date+".jpg"));
+			FileUtils.copyFile(scrFile, new File(path, fileName));
+		} catch (IOException e) { 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -119,7 +127,5 @@ public class TestFrameWork implements ITestListener {
 	public void onFinish(ITestContext iTestContext) {
 
 	}
-
-	
 
 }

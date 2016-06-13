@@ -46,10 +46,10 @@ public class NewClientAsserts extends TestFrameWork {
 		clientPage.selectIndustry("Consumer & Industrial Products");
 		Thread.sleep(5000);
 		clientPage.selectSector("Aerospace & Defense");
-		//clientPage.selectGeography("Global");
-		 clientPage.selectGeography("Country Specific");
-		 clientPage.selectMultipleValues(new
-		 String[]{"Afghanistan","Aland Islands"});
+		clientPage.selectGeography("Global");
+//		 clientPage.selectGeography("Country Specific");
+//		 clientPage.selectMultipleValues(new
+//		 String[]{"Afghanistan","Aland Islands"});
 		clientPage.enterBusinessUnit("Deloitte Consulting Unit");
 		Thread.sleep(5000);
 		clientPage.clickOnSaveClientInfo();

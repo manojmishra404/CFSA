@@ -5,11 +5,13 @@ package com.cfsa.qa.pages;
 
 import java.util.List;
 
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -23,32 +25,35 @@ import com.cfsa.qa.utils.Log;
  *
  */
 public class ClientPage extends Page {
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//input[@id='clientName']")
 	// @FindBy(how = How.XPATH, using = "//input[@id='asdf']")
 	WebElement newClientName;
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()='Select Industry']/..")
 	WebElement selectIndustryDropdown;
 
 	// @FindBy(how = How.XPATH, using = "//a[contains(text(), industryName)]")
 	// WebElement selectIndustryDropdownText;
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()='Select Sector']/..")
 	WebElement selectSectorDropdown;
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()= 'Select Geography']/../..")
 	WebElement countrySpecificDropdown;
 
-	@FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
+//	@FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
+//	WebElement businessUnit;
+	@CacheLookup
+	@FindBy(how = How.XPATH, using = "//textarea[@id='bussss']")
 	WebElement businessUnit;
-
-	@FindBy(how = How.XPATH, using = "//button[@class='btn process-btn']/span")
+	@CacheLookup
+	@FindBy(how = How.XPATH, using = "//button[@class='btn process-btn']")
 	WebElement saveClientInfoBtn;
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//button[@class='btn-link']")
 	WebElement cancelBtn;
-
+	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//select[@class = 'form-control multi-select ng-pristine ng-untouched ng-invalid ng-invalid-required']")
 	WebElement countrySpecific;
 
@@ -164,8 +169,12 @@ public class ClientPage extends Page {
 
 	public void clickOnSaveClientInfo() throws Exception {
 		try {
-			//if(checkStatusOfSaveClientInfo() == true)
+			if(checkStatusOfSaveClientInfo() == true)
 			saveClientInfoBtn.click();
+			else
+				throw new Exception(
+						"exception while clicking SaveClientInfo button");
+			
 		} catch (Exception e) {
 			Log.errorLog("SaveClientInfo button not found: ", e);
 			throw new Exception(
@@ -181,14 +190,28 @@ public class ClientPage extends Page {
 
 	}
 	
-//	public boolean checkStatusOfSaveClientInfo() {
-//
-//		String status = saveClientInfoBtn.getAttribute("disabled");
-//		if(status.equals("disabled"))
+	@SuppressWarnings("unused")
+	public boolean checkStatusOfSaveClientInfo() {
+
+		String status = saveClientInfoBtn.getAttribute("disabled");
+		System.out.println(status);
+		
+		if(status==null)
+			return true;
+		
+		 else if(status.equals("true"))
+				return false;
+		
+		 else return true;
+		}
+		
+//		if(status == "true")
+//			return false;
+//		else if (status == "null")
 //			return false;
 //		else return true;
 //		
-//	}
+	
 
 }// end of class
 

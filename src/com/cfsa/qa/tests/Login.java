@@ -6,6 +6,7 @@ public class Login extends  TestFrameWork{
     public void toCFSA()
     {
         driver.get(FileHandeling.getConfigValue("cfsa_url"));
+        driver.manage().window().maximize();
     }
     public void toCFPA()
     {

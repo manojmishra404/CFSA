@@ -14,6 +14,8 @@ public class ClientTest extends TestFrameWork {
 
 	@Test
 	public void testVerifyCreateNewClient() throws Exception {
+
+		System.out.println("<---------testVerifyCreateNewClient----------->");
 		Log.InfoLog("testVerifyCreateNewClient started");
 		new Login().toCFSA();
 		NewClientAsserts newclientAssertsObj = new NewClientAsserts();
@@ -24,6 +26,8 @@ public class ClientTest extends TestFrameWork {
 
 	@Test
 	public void testVerifyClientCancelBtn() throws Exception {
+
+		System.out.println("<---------testVerifyClientCancelBtn----------->");
 		Log.InfoLog("testVerifyClientCancelBtn started");
 		new Login().toCFSA();
 		NewClientAsserts newclientAssertsObj = new NewClientAsserts();
