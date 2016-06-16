@@ -8,8 +8,10 @@
 		<classes>
 			<class name="com.cfsa.qa.tests.ClientTest">
 				<methods>
-					<include name="testVerifyCreateNewClient" />
-					<include name="testVerifyClientCancelBtn"/>
+					<!-- <include name="testVerifyCreateNewClient" />
+					<include name="testVerifyClientCancelBtn"/> -->
+					<!-- <include name="testVerifySelectIndustryDropdownValues"/> -->
+					<include name="testVerifyCountrySpecificMultiSelectValues"/>
 				</methods>
 			</class>
 		</classes>

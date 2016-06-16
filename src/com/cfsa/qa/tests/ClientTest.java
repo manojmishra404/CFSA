@@ -34,5 +34,29 @@ public class ClientTest extends TestFrameWork {
 		newclientAssertsObj.verifyClientCancelBtn();
 		Log.InfoLog("testVerifyClientCancelBtn completed.");
 	}
+	
+	@Test
+	public void testVerifySelectIndustryDropdownValues() throws Exception {
+		
+		System.out.println("<---------testVerifySelectIndustryDropdownValues----------->");
+		Log.InfoLog("testVerifySelectIndustryDropdownValues started");
+		new Login().toCFSA();
+		NewClientAsserts newclientAssertsObj = new NewClientAsserts();
+		newclientAssertsObj.verifySelectIndustryDropdownValues();
+		Log.InfoLog("testVerifySelectIndustryDropdownValues completed.");
+		
+	}
+	
+	@Test
+	public void testVerifyCountrySpecificMultiSelectValues() throws Exception {
+		
+		System.out.println("<---------testVerifyCountrySpecificMultiSelectValues----------->");
+		Log.InfoLog("testVerifyCountrySpecificMultiSelectValues started");
+		new Login().toCFSA();
+		NewClientAsserts newclientAssertsObj = new NewClientAsserts();
+		newclientAssertsObj.VerifyCountrySpecificMultiSelectValues();
+		Log.InfoLog("testVerifyCountrySpecificMultiSelectValues completed.");
+	}
+	
 
 }

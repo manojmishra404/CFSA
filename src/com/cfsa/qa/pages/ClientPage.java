@@ -3,6 +3,7 @@
  */
 package com.cfsa.qa.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.experimental.categories.Category;
@@ -42,8 +43,8 @@ public class ClientPage extends Page {
 	@FindBy(how = How.XPATH, using = "//span[text()= 'Select Geography']/../..")
 	WebElement countrySpecificDropdown;
 
-//	@FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
-//	WebElement businessUnit;
+	// @FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
+	// WebElement businessUnit;
 	@CacheLookup
 	@FindBy(how = How.XPATH, using = "//textarea[@id='bussss']")
 	WebElement businessUnit;
@@ -169,12 +170,12 @@ public class ClientPage extends Page {
 
 	public void clickOnSaveClientInfo() throws Exception {
 		try {
-			if(checkStatusOfSaveClientInfo() == true)
-			saveClientInfoBtn.click();
+			if (checkStatusOfSaveClientInfo() == true)
+				saveClientInfoBtn.click();
 			else
 				throw new Exception(
 						"exception while clicking SaveClientInfo button");
-			
+
 		} catch (Exception e) {
 			Log.errorLog("SaveClientInfo button not found: ", e);
 			throw new Exception(
@@ -189,29 +190,59 @@ public class ClientPage extends Page {
 			return false;
 
 	}
-	
+
 	@SuppressWarnings("unused")
 	public boolean checkStatusOfSaveClientInfo() {
 
 		String status = saveClientInfoBtn.getAttribute("disabled");
 		System.out.println(status);
-		
-		if(status==null)
+
+		if (status == null)
 			return true;
+
+		else if (status.equals("true"))
+			return false;
+
+		else
+			return true;
+	}
+
+	@SuppressWarnings("null")
+	public List<String> getAllIndustryList() {
+
+		List<String> industryList = new ArrayList<String>();
+		selectIndustryDropdown.click();
+		List<WebElement> industry = driver.findElements(By
+				.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)"));
 		
-		 else if(status.equals("true"))
-				return false;
-		
-		 else return true;
+		int i = 1;
+		for (WebElement element : industry) {
+			
+			String industryValue = driver
+					.findElement(
+							By.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)["+ i +"]")).getText();
+			industryList.add(industryValue);
+			i++;
+
 		}
-		
-//		if(status == "true")
-//			return false;
-//		else if (status == "null")
-//			return false;
-//		else return true;
-//		
+
+		return industryList;
+
+	}
 	
+	public List<String> getAllCountrySpecificValues() {
+		List<String> countryList = new ArrayList<String>();
+		Select multiSelect = new Select(countrySpecific);
+		List<WebElement> countries = multiSelect.getOptions();
+		int i = 1;
+		for(WebElement element : countries){
+			String value = element.getText();
+			countryList.add(value);
+			i++;
+		}
+		return countryList;
+		
+	}
 
 }// end of class
 
