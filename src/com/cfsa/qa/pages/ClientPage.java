@@ -26,35 +26,38 @@ import com.cfsa.qa.utils.Log;
  *
  */
 public class ClientPage extends Page {
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//input[@id='clientName']")
-	// @FindBy(how = How.XPATH, using = "//input[@id='asdf']")
+	//@FindBy(how = How.XPATH, using = "//input[@id='asdf']")
 	WebElement newClientName;
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()='Select Industry']/..")
 	WebElement selectIndustryDropdown;
 
 	// @FindBy(how = How.XPATH, using = "//a[contains(text(), industryName)]")
 	// WebElement selectIndustryDropdownText;
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()='Select Sector']/..")
 	WebElement selectSectorDropdown;
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//span[text()= 'Select Geography']/../..")
 	WebElement countrySpecificDropdown;
-
-	// @FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
-	// WebElement businessUnit;
-	@CacheLookup
-	@FindBy(how = How.XPATH, using = "//textarea[@id='bussss']")
+	// @CacheLookup
+	@FindBy(how = How.XPATH, using = "//textarea[@id='businessUnit']")
 	WebElement businessUnit;
-	@CacheLookup
+	/*
+	 * //@CacheLookup
+	 * 
+	 * @FindBy(how = How.XPATH, using = "//textarea[@id='bussss']") WebElement
+	 * businessUnit;
+	 */
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//button[@class='btn process-btn']")
 	WebElement saveClientInfoBtn;
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//button[@class='btn-link']")
 	WebElement cancelBtn;
-	@CacheLookup
+	// @CacheLookup
 	@FindBy(how = How.XPATH, using = "//select[@class = 'form-control multi-select ng-pristine ng-untouched ng-invalid ng-invalid-required']")
 	WebElement countrySpecific;
 
@@ -71,8 +74,7 @@ public class ClientPage extends Page {
 			@Override
 			public Boolean apply(WebDriver driver) {
 				// TODO Auto-generated method stub
-				return null != (driver.findElement(By
-						.xpath("//input[@id='clientName']")));
+				return null != (driver.findElement(By.xpath("//input[@id='clientName']")));
 			}
 		});
 	}// end of waitForPageToLoad method
@@ -83,9 +85,8 @@ public class ClientPage extends Page {
 			for (String str : values) {
 				Actions builder = new Actions(driver);
 				builder.keyDown(Keys.CONTROL)
-						.click(driver.findElement(By
-								.xpath("//option[contains(text(), '" + str
-										+ "' )]"))).keyUp(Keys.CONTROL);
+						.click(driver.findElement(By.xpath("//option[contains(text(), '" + str + "' )]")))
+						.keyUp(Keys.CONTROL);
 
 				builder.build().perform();
 
@@ -95,14 +96,24 @@ public class ClientPage extends Page {
 			}
 		} catch (Exception e) {
 			Log.errorLog("country specific multi-select element not found: ", e);
-			throw new Exception(
-					"exception while selecting values from multiselect");
+			throw new Exception("exception while selecting values from multiselect");
 		}
 	}// end of selectMultipleValues
 
-	public void enterClientName() {
-		try {
+	public void enterClientName() throws Exception{
+		try{
 			newClientName.sendKeys("Deloitte");
+		} catch (Exception e) {
+			Log.errorLog("ClintName textbox element not found: ", e);
+			throw new Exception("ClintName textbox element not found");
+			
+		}
+	}
+
+	public void clickClientName() {
+		try {
+			System.out.println("From Click client Name method");
+			newClientName.click();
 		} catch (Exception e) {
 			Log.errorLog("ClintName textbox element not found: ", e);
 		}
@@ -111,17 +122,14 @@ public class ClientPage extends Page {
 	public void selectIndustry(String industryName) throws Exception {
 		try {
 			selectIndustryDropdown.click();
-			driver.findElement(
-					By.xpath("//a[contains(text(),'" + industryName + "')]"))
-					.click();
+			driver.findElement(By.xpath("//a[contains(text(),'" + industryName + "')]")).click();
 
 			// driver.findElement(
 			// By.xpath("//a[contains(text(),'" + industryName + "]"))
 			// .click();
 		} catch (Exception e) {
 			Log.errorLog("Industry dropdown element not found: ", e);
-			throw new Exception("exception while selecting industry :"
-					+ industryName);
+			throw new Exception("exception while selecting industry :" + industryName);
 		}
 	}
 
@@ -129,13 +137,11 @@ public class ClientPage extends Page {
 		try {
 			selectSectorDropdown.click();
 			Thread.sleep(3000);
-			driver.findElement(
-					By.xpath("//a[contains(text(),'" + sectorValue + "')]"))
+			driver.findElement(By.xpath("//a[contains(text(),'" + sectorValue + "')]"))// .isDisplayed();
 					.click();
 		} catch (Exception e) {
 			Log.errorLog("Sector dropdown element not found: ", e);
-			throw new Exception("exception while selecting sector :"
-					+ sectorValue);
+			throw new Exception("exception while selecting sector :" + sectorValue);
 		}
 	}
 
@@ -143,14 +149,11 @@ public class ClientPage extends Page {
 		try {
 			countrySpecificDropdown.click();
 			Thread.sleep(3000);
-			driver.findElement(
-					By.xpath("//a[contains(text(),'" + geographyValue + "')]"))
-					.click();
+			driver.findElement(By.xpath("//a[contains(text(),'" + geographyValue + "')]")).click();
 
 		} catch (Exception e) {
 			Log.errorLog("Geography dropdown element not found: ", e);
-			throw new Exception("exception while selecting geography :"
-					+ geographyValue);
+			throw new Exception("exception while selecting geography :" + geographyValue);
 		}
 
 	}
@@ -173,13 +176,11 @@ public class ClientPage extends Page {
 			if (checkStatusOfSaveClientInfo() == true)
 				saveClientInfoBtn.click();
 			else
-				throw new Exception(
-						"exception while clicking SaveClientInfo button");
+				throw new Exception("exception while clicking SaveClientInfo button");
 
 		} catch (Exception e) {
 			Log.errorLog("SaveClientInfo button not found: ", e);
-			throw new Exception(
-					"exception while clicking SaveClientInfo button");
+			throw new Exception("exception while clicking SaveClientInfo button");
 		}
 	}
 
@@ -212,15 +213,15 @@ public class ClientPage extends Page {
 
 		List<String> industryList = new ArrayList<String>();
 		selectIndustryDropdown.click();
-		List<WebElement> industry = driver.findElements(By
-				.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)"));
-		
+		List<WebElement> industry = driver
+				.findElements(By.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)"));
+
 		int i = 1;
 		for (WebElement element : industry) {
-			
+
 			String industryValue = driver
-					.findElement(
-							By.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)["+ i +"]")).getText();
+					.findElement(By.xpath("(//span[contains(text(), 'Select Industry')]/../../ul/li/a)[" + i + "]"))
+					.getText();
 			industryList.add(industryValue);
 			i++;
 
@@ -229,20 +230,37 @@ public class ClientPage extends Page {
 		return industryList;
 
 	}
-	
+
 	public List<String> getAllCountrySpecificValues() {
 		List<String> countryList = new ArrayList<String>();
 		Select multiSelect = new Select(countrySpecific);
 		List<WebElement> countries = multiSelect.getOptions();
 		int i = 1;
-		for(WebElement element : countries){
+		for (WebElement element : countries) {
 			String value = element.getText();
 			countryList.add(value);
 			i++;
 		}
 		return countryList;
-		
+
+	}
+
+	public List<String> getAllsectorList() {
+
+		List<String> SectorList = new ArrayList<String>();
+		selectSectorDropdown.click();
+		List<WebElement> sector = driver
+				.findElements(By.xpath("(//span[contains(text(), 'Select Sector')]/../../ul/li/a)"));
+
+		int i = 1;
+		for (WebElement element : sector) {
+			String sectorValue = driver
+					.findElement(By.xpath("(//span[contains(text(), 'Select Sector')]/../../ul/li/a)[" + i + "]"))
+					.getText();
+			SectorList.add(sectorValue);
+			i++;
+		}
+		return SectorList;
 	}
 
 }// end of class
-

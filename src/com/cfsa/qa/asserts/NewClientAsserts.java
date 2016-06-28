@@ -42,22 +42,22 @@ public class NewClientAsserts extends TestFrameWork {
 				.initElements(driver, DashboardPage.class);
 		dp.clickOnClientButton();
 
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 
 		ClientPage clientPage = PageFactory.initElements(driver,
 				ClientPage.class);
 		clientPage.enterClientName();
 		clientPage.selectIndustry("Consumer & Industrial Products");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		clientPage.selectSector("Aerospace & Defense");
 		clientPage.selectGeography("Global");
 		// clientPage.selectGeography("Country Specific");
 		// clientPage.selectMultipleValues(new
 		// String[]{"Afghanistan","Aland Islands"});
 		clientPage.enterBusinessUnit("Deloitte Consulting Unit");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		clientPage.clickOnSaveClientInfo();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		dp = PageFactory.initElements(driver, DashboardPage.class);
 		Assert.assertTrue(dp.clientNameIsDisplayed("Deloitte"));
 
@@ -134,5 +134,88 @@ public class NewClientAsserts extends TestFrameWork {
 		}
 
 	}
+	
+	public void ClickOnNewClient() throws Exception
+	{	
+		DashboardPage dp = PageFactory.initElements(driver, DashboardPage.class);
+		dp.clickOnClientButton();
+		Thread.sleep(5000);
+		ClientPage clientPage = PageFactory.initElements(driver,ClientPage.class);
+	}
+	
+	public void verifySelectSectorDropdownValues(String Industry) throws Exception {
 
+		DashboardPage dp = PageFactory
+				.initElements(driver, DashboardPage.class);
+	
+		if(Industry.equalsIgnoreCase("Consumer & Industrial Products"))
+		{
+			System.out.println("== Clicking on new client ==");
+			dp.clickOnClientButton();
+		}
+
+		Thread.sleep(5000);
+
+		ClientPage clientPage = PageFactory.initElements(driver,
+				ClientPage.class);
+			
+		String SectorDropdownValues = null;
+		
+		switch(Industry)
+		{
+			case "Consumer & Industrial Products":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("ConsumerIndustry");
+				break;
+			case "Financial Services & Insurance":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("FinancialIndustry");
+				break;
+			case "Energy & Resources":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("EnergyIndustry");
+				break;
+			case "Life Sciences & Healthcare":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("LifeScienceIndustry");
+				break;
+			case "Public Sector":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("PublicSectorIndustry");
+				break;
+			case "Tech, Media & Telecom":
+				System.out.println("Getting sector values for Industry "+Industry);
+				SectorDropdownValues = FileHandeling.getConfigValue("TechMediaTelecomIndustry");
+				break;
+			default :
+				System.out.println("Invalid Industry selected");
+		}
+        
+		clientPage.selectIndustry(Industry);
+    	Thread.sleep(5000);
+		
+		
+		System.out.println("The configfile values read for INDUSTRY "+Industry+"are ---> "+SectorDropdownValues);
+		
+		List<String> sector = clientPage.getAllsectorList();
+		System.out.println("The Sector dropdown values on the application are ---> "+sector);
+		/*String sectorListValues = FileHandeling
+				.getConfigValue(SectorDropdownValues);
+		String[] industryArr = sectorListValues.split(":");
+*/		
+		String[] sectorArr = SectorDropdownValues.split(":");
+		int length = sector.size();
+		System.out.println(length);
+		System.out.println(sectorArr.length);
+
+		for (int i = 0, j = 0; i <= length - 1 & j <= sectorArr.length - 1; i++, j++) {
+			String sectorListValue = sector.get(i).trim();
+			String sectorArrValue = sectorArr[j].trim();
+			System.out.println("Actual:- " + sectorListValue
+					+ "      Expected:-" + sectorArrValue);			
+			Assert.assertEquals(sectorListValue, sectorArrValue);
+		}
+
+	}		
+		
 }

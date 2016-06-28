@@ -23,14 +23,16 @@ public class DashboardPage extends Page {
 	}
 	
 	@CacheLookup
-	@FindBy(how = How.XPATH, using = "//span[@class='pull-right new-client-action']/i")
+	//@FindBy(how = How.XPATH, using = "//span[@class='pull-right new-client-action']/i")
+	@FindBy(how = How.XPATH, using = "//span[@class='pull-right new-client-action modal-action']")
 	WebElement NewClientBtn;
 	
 	
 	
 	
-	public void clickOnClientButton() {
+	public void clickOnClientButton() throws Exception {
 		NewClientBtn.click();
+		Thread.sleep(5000);
 
 	}// end of method
 

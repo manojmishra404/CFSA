@@ -2,16 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SpeandAnalytics">
 	<listeners>
-		<listener class-name="com.cfsa.qa.tests.TestFrameWork"/>
+		<listener class-name="com.cfsa.qa.tests.TestFrameWork" />
 	</listeners>
 	<test name="ClientTests" preserve-order="true">
 		<classes>
 			<class name="com.cfsa.qa.tests.ClientTest">
 				<methods>
-					<!-- <include name="testVerifyCreateNewClient" />
-					<include name="testVerifyClientCancelBtn"/> -->
-					<!-- <include name="testVerifySelectIndustryDropdownValues"/> -->
-					<include name="testVerifyCountrySpecificMultiSelectValues"/>
+					<include name="testVerifyCreateNewClient" />
+					<include name="testVerifyClientCancelBtn" />
+					<include name="testVerifySelectIndustryDropdownValues" />
+					<include name="testVerifyCountrySpecificMultiSelectValues" />
+					<include name="testVerifySelectsectorDropdownValues" />
 				</methods>
 			</class>
 		</classes>

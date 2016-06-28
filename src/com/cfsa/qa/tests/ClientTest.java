@@ -1,5 +1,7 @@
 package com.cfsa.qa.tests;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -7,11 +9,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 
 import com.cfsa.qa.asserts.NewClientAsserts;
+import com.cfsa.qa.utils.FileHandeling;
 import com.cfsa.qa.utils.Log;
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
 public class ClientTest extends TestFrameWork {
-
 	@Test
 	public void testVerifyCreateNewClient() throws Exception {
 
@@ -43,6 +45,7 @@ public class ClientTest extends TestFrameWork {
 		new Login().toCFSA();
 		NewClientAsserts newclientAssertsObj = new NewClientAsserts();
 		newclientAssertsObj.verifySelectIndustryDropdownValues();
+		
 		Log.InfoLog("testVerifySelectIndustryDropdownValues completed.");
 		
 	}
@@ -57,6 +60,26 @@ public class ClientTest extends TestFrameWork {
 		newclientAssertsObj.VerifyCountrySpecificMultiSelectValues();
 		Log.InfoLog("testVerifyCountrySpecificMultiSelectValues completed.");
 	}
+		
+@Test
+public void testVerifySelectsectorDropdownValues() throws Exception {
 	
+	System.out.println("<---------testVerifySelectsectorDropdownValues----------->");
+	Log.InfoLog("testVerifySelectsectorDropdownValues started");
+	String IndustryName;
+	new Login().toCFSA();
+	String IndustryListValues = FileHandeling.getConfigValue("industryList");
+	String[] IndustryListArr=IndustryListValues.split(":");
+	NewClientAsserts newclientAssertsObj = new NewClientAsserts();
+	for (int i=0 ; i<IndustryListArr.length;i++)
+	{
+		IndustryName=(IndustryListArr[i].trim());	
+		System.out.println("Verifying the Sector dropdown values for the Industry --> "+IndustryName);
+		newclientAssertsObj.verifySelectSectorDropdownValues(IndustryName);
+		System.out.println("");
+		Thread.sleep(5000);
+	}
 
+	Log.InfoLog("testVerifySelectsectorDropdownValues completed.");
+	}
 }

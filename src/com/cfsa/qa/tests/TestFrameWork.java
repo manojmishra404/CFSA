@@ -41,8 +41,8 @@ public class TestFrameWork implements ITestListener {
 	@BeforeMethod
 	public void openBroswer() throws Exception {
 
-		// PropertyConfigurator.configure(System.getProperty("user.dir")
-		// + "\\log4j.properties");
+		 PropertyConfigurator.configure(System.getProperty("user.dir")
+		 + "\\log4j.properties");
 		String browserName = FileHandeling.getConfigValue("browser");
 		// open broswer logics for opening broswer Firefox or chrome after
 		// reading config
